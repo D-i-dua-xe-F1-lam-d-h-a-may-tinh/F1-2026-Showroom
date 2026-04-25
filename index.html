@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="F1 2026 Virtual Showroom & Race Simulator — Trải nghiệm xe đua F1 thế hệ mới" />
+  <title>F1 2026 Virtual Showroom</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Rajdhani:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- ══════════════════════════════════════ HEADER ══════════════════════════════════════ -->
+  <header id="header">
+    <div class="header-left">
+      <span class="f1-logo">F1</span>
+      <div class="header-divider"></div>
+      <span class="header-title">2026 VIRTUAL SHOWROOM</span>
+    </div>
+    <div class="header-center">
+      <div class="live-ticker" id="live-ticker">
+        <span class="ticker-dot"></span>
+        <span class="ticker-text">LIVE TELEMETRY ACTIVE</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <button id="btn-fia-reg" class="fia-badge">
+        <span class="fia-badge-icon">📋</span>
+        FIA 2026
+      </button>
+    </div>
+  </header>
+
+  <!-- ══════════════════════════════════════ LEFT: TEAM SELECTOR ══════════════════════════════════════ -->
+  <aside id="team-panel" class="glass-panel">
+    <div class="panel-header">
+      <span class="panel-icon">🏁</span>
+      <span class="panel-title">TEAMS 2026</span>
+    </div>
+    <ul id="team-list"></ul>
+  </aside>
+
+  <!-- ══════════════════════════════════════ BOTTOM CENTER: VIEW MODES ══════════════════════════════════════ -->
+  <nav id="xray-controls">
+    <button class="xray-btn active" data-mode="normal" id="btn-normal">
+      <span class="btn-icon">👁️</span>
+      <span class="btn-label">Normal</span>
+    </button>
+    <div class="btn-separator"></div>
+    <button class="xray-btn" data-mode="xray" id="btn-xray">
+      <span class="btn-icon">🔬</span>
+      <span class="btn-label">X-Ray</span>
+    </button>
+    <button class="xray-btn" data-mode="engine" id="btn-engine">
+      <span class="btn-icon">⚙️</span>
+      <span class="btn-label">Động cơ ICE</span>
+    </button>
+    <button class="xray-btn" data-mode="battery" id="btn-battery">
+      <span class="btn-icon">🔋</span>
+      <span class="btn-label">Energy Store</span>
+    </button>
+    <button class="xray-btn" data-mode="mguk" id="btn-mguk">
+      <span class="btn-icon">⚡</span>
+      <span class="btn-label">MGU-K</span>
+    </button>
+  </nav>
+
+  <!-- ══════════════════════════════════════ RIGHT: FIA VALIDATOR ══════════════════════════════════════ -->
+  <aside id="dashboard-panel" class="glass-panel">
+    <div class="panel-header">
+      <span class="panel-icon">🏎️</span>
+      <span class="panel-title">FIA 2026 VALIDATOR</span>
+    </div>
+
+    <div class="dashboard-stats">
+      <div class="stat-row"><span class="stat-label">Power Unit</span><span class="stat-value cyan">V6 Turbo
+          Hybrid</span></div>
+      <div class="stat-row"><span class="stat-label">ICE Power</span><span class="stat-value cyan">400 kW</span></div>
+      <div class="stat-row"><span class="stat-label">ERS</span><span class="stat-value cyan">MGU-K Only</span></div>
+    </div>
+
+    <!-- Battery slider -->
+    <div class="slider-section">
+      <div class="slider-header">
+        <span class="slider-title">BATTERY POWER</span>
+        <span class="slider-value" id="battery-value">2.0<small>MJ</small></span>
+      </div>
+      <div class="limit-bar-wrap">
+        <div class="limit-bar-fill" id="battery-bar"></div>
+        <div class="limit-marker" style="left:80%"></div>
+      </div>
+      <input type="range" id="battery-slider" min="0" max="5" step="0.1" value="2.0" class="custom-slider" />
+      <div class="slider-markers"><span>0 MJ</span><span class="fia-limit-label">▲ 4.0 MJ</span><span>5 MJ</span></div>
+    </div>
+
+    <!-- MGU-K slider -->
+    <div class="slider-section">
+      <div class="slider-header">
+        <span class="slider-title">MGU-K POWER</span>
+        <span class="slider-value" id="mguk-value">200<small>kW</small></span>
+      </div>
+      <div class="limit-bar-wrap">
+        <div class="limit-bar-fill" id="mguk-bar"></div>
+        <div class="limit-marker" style="left:70%"></div>
+      </div>
+      <input type="range" id="mguk-slider" min="0" max="500" step="5" value="200" class="custom-slider" />
+      <div class="slider-markers"><span>0 kW</span><span class="fia-limit-label">▲ 350 kW</span><span>500 kW</span>
+      </div>
+    </div>
+
+    <!-- Wing Angle -->
+    <div class="slider-section">
+      <div class="slider-header">
+        <span class="slider-title">WING ANGLE</span>
+        <span class="slider-value" id="wing-value">12<small>°</small></span>
+      </div>
+      <input type="range" id="wing-slider" min="1" max="30" step="1" value="12" class="custom-slider" />
+      <div class="slider-markers"><span>1° (Low Drag)</span><span>30° (Max DF)</span></div>
+    </div>
+
+    <!-- FIA status -->
+    <div id="fia-status" class="fia-status compliant">
+      <span class="fia-status-icon">✅</span>
+      <span class="fia-status-text">FIA COMPLIANT</span>
+    </div>
+
+    <!-- Error codes -->
+    <div id="error-codes" class="error-codes hidden"></div>
+
+    <!-- START RACE BUTTON -->
+    <div class="start-race-section">
+      <button id="btn-start-race" class="start-race-btn">
+        <span class="start-race-icon">🏁</span>
+        <span class="start-race-text">START RACE</span>
+      </button>
+    </div>
+
+    <!-- Component info on inspection -->
+    <div id="component-info" class="component-info hidden">
+      <div class="component-divider"></div>
+      <h3 id="component-name" class="component-name"></h3>
+      <p id="component-desc" class="component-desc"></p>
+    </div>
+  </aside>
+
+  <!-- ══════════════════════════════════════ BOTTOM LEFT: TELEMETRY HUD ══════════════════════════════════════ -->
+  <div id="telemetry-hud" class="telemetry-hud glass-panel">
+    <div class="panel-header">
+      <span class="panel-icon">📡</span>
+      <span class="panel-title">LIVE TELEMETRY</span>
+    </div>
+    <div class="telemetry-grid">
+      <div class="telem-cell">
+        <div class="telem-label">TOP SPEED</div>
+        <div class="telem-val" id="tel-speed" data-val="0">--<small>km/h</small></div>
+      </div>
+      <div class="telem-cell">
+        <div class="telem-label">0→100 G-FORCE</div>
+        <div class="telem-val" id="tel-gforce">--<small>G</small></div>
+      </div>
+      <div class="telem-cell">
+        <div class="telem-label">TOTAL POWER</div>
+        <div class="telem-val" id="tel-power">--<small>kW</small></div>
+      </div>
+      <div class="telem-cell">
+        <div class="telem-label">DOWNFORCE</div>
+        <div class="telem-val" id="tel-downforce">--<small>N</small></div>
+      </div>
+    </div>
+    <div class="ers-section">
+      <div class="ers-header"><span class="ers-label">ERS DEPLOYMENT</span><span class="ers-pct" id="ers-pct">0%</span>
+      </div>
+      <div class="ers-bar-track">
+        <div class="ers-bar-fill" id="ers-bar-fill"></div>
+        <div class="ers-segments">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    </div>
+    <div class="ice-status-row">
+      <span class="ice-label">ICE STATUS</span>
+      <div class="ice-indicators">
+        <div class="ice-led active" title="Fuel Injectors"></div>
+        <div class="ice-led active" title="Turbo"></div>
+        <div class="ice-led active" title="Cooling"></div>
+        <div class="ice-led" id="ice-overheat" title="Overheat"></div>
+      </div>
+      <span class="ice-status-text" id="ice-status-text">NOMINAL</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ RACE HUD (visible during race) ══════════════════════════════════════ -->
+  <div id="race-hud" class="race-hud hidden">
+    <!-- Speed gauge -->
+    <div class="race-speed-gauge glass-panel">
+      <div class="race-speed-num" id="race-speed">0</div>
+      <div class="race-speed-unit">KM/H</div>
+    </div>
+
+    <!-- RPM gauge -->
+    <div class="race-rpm-gauge glass-panel">
+      <div class="race-rpm-label">RPM</div>
+      <div class="race-rpm-bar-track">
+        <div class="race-rpm-bar-fill" id="race-rpm-bar"></div>
+      </div>
+      <div class="race-rpm-num" id="race-rpm">0</div>
+    </div>
+
+    <!-- Gear indicator -->
+    <div class="race-gear-indicator glass-panel">
+      <div class="race-gear-label">GEAR</div>
+      <div class="race-gear-num" id="race-gear">1</div>
+    </div>
+
+    <!-- ERS energy bar -->
+    <div class="race-ers-gauge glass-panel">
+      <div class="race-ers-label">ERS</div>
+      <div class="race-ers-track">
+        <div class="race-ers-fill" id="race-ers-fill"></div>
+      </div>
+      <div class="race-ers-pct" id="race-ers-pct">100%</div>
+    </div>
+
+    <!-- Brake indicator -->
+    <div class="race-brake glass-panel">
+      <div class="race-brake-label">BRAKE</div>
+      <div class="race-brake-track">
+        <div class="race-brake-fill" id="race-brake"></div>
+      </div>
+    </div>
+
+    <!-- Throttle bar -->
+    <div class="race-throttle glass-panel">
+      <div class="race-throttle-label">THROTTLE</div>
+      <div class="race-throttle-track">
+        <div class="race-throttle-fill" id="race-throttle"></div>
+      </div>
+    </div>
+
+    <!-- Lap counter -->
+    <div class="race-lap-display glass-panel">
+      <div class="race-lap-label">LAP</div>
+      <div class="race-lap-num" id="race-lap">0/3</div>
+    </div>
+
+    <!-- WASD Controls hint -->
+    <div class="race-controls-hint glass-panel" id="race-controls-hint">
+      <div class="controls-hint-title">CONTROLS</div>
+      <div class="controls-hint-keys">
+        <div class="key-row"><span class="key">W</span></div>
+        <div class="key-row">
+          <span class="key">A</span>
+          <span class="key">S</span>
+          <span class="key">D</span>
+        </div>
+      </div>
+      <div class="controls-hint-desc">WASD to drive</div>
+    </div>
+
+    <!-- Return to showroom -->
+    <button id="btn-back-showroom" class="back-showroom-btn">
+      <span>← SHOWROOM</span>
+    </button>
+  </div>
+
+  <!-- ══════════════════════════════════════ WARNING OVERLAY ══════════════════════════════════════ -->
+  <div id="fia-warning-overlay" class="fia-warning-overlay hidden">
+    <div class="warning-scanlines"></div>
+    <div class="warning-content">
+      <div class="warning-icon">⚠️</div>
+      <h2 class="warning-title">FIA REGULATION BREACH</h2>
+      <p id="warning-message" class="warning-message"></p>
+      <div class="warning-codes" id="warning-codes"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ LOADING SCREEN ══════════════════════════════════════ -->
+  <div id="loading-screen" class="loading-screen">
+    <div class="loading-scanlines"></div>
+    <div class="loading-content">
+      <div class="loading-logo">F1</div>
+      <div class="loading-year">2026</div>
+      <div class="loading-bar-container">
+        <div class="loading-bar" id="loading-bar"></div>
+        <div class="loading-bar-glow"></div>
+      </div>
+      <p class="loading-text" id="loading-text">INITIALIZING SYSTEMS...</p>
+      <div class="loading-specs">
+        <span>HDR LIGHTING</span>
+        <span>PHYSICS ENGINE</span>
+        <span>FIA VALIDATOR</span>
+        <span>RACE TRACK</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ CANVAS ══════════════════════════════════════ -->
+  <div id="canvas-container"></div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+
+</html>
