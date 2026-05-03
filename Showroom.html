@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="F1 Showroom — Phòng trưng bày xe đua F1 phong cách tương lai" />
+  <title>F1 Showroom</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Rajdhani:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+</head>
+
+<body>
+
+  <!-- ══════════════════ HEADER ══════════════════ -->
+  <header id="header">
+    <div class="header-left">
+      <span class="f1-logo">F1</span>
+      <div class="header-divider"></div>
+      <span class="header-title">SHOWROOM</span>
+    </div>
+    <div class="header-center">
+      <div class="live-ticker">
+        <span class="ticker-dot"></span>
+        <span class="ticker-text">SHOWROOM 3D</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <span class="header-badge">FUTURE TECH</span>
+    </div>
+  </header>
+
+  <!-- ══════════════════ LEFT: TEAM SELECTOR ══════════════════ -->
+  <aside id="team-panel" class="glass-panel">
+    <div class="panel-header">
+      <span class="panel-icon">🏁</span>
+      <span class="panel-title">TEAMS 2026</span>
+    </div>
+    <ul id="team-list"></ul>
+  </aside>
+
+  <!-- ══════════════════ BOTTOM CENTER: VIEW MODES ══════════════════ -->
+  <nav id="xray-controls">
+    <button class="xray-btn active" data-mode="normal" id="btn-normal">
+      <span class="btn-icon">👁️</span>
+      <span class="btn-label">Normal</span>
+    </button>
+    <div class="btn-separator"></div>
+    <button class="xray-btn" data-mode="xray" id="btn-xray">
+      <span class="btn-icon">🔬</span>
+      <span class="btn-label">X-Ray</span>
+    </button>
+    <button class="xray-btn" data-mode="engine" id="btn-engine">
+      <span class="btn-icon">⚙️</span>
+      <span class="btn-label">Động cơ V6</span>
+    </button>
+    <button class="xray-btn" data-mode="battery" id="btn-battery">
+      <span class="btn-icon">🔋</span>
+      <span class="btn-label">Battery</span>
+    </button>
+    <button class="xray-btn" data-mode="radiator" id="btn-radiator">
+      <span class="btn-icon">🌡️</span>
+      <span class="btn-label">Tản nhiệt</span>
+    </button>
+  </nav>
+
+  <!-- ══════════════════ RIGHT: INFO PANEL ══════════════════ -->
+  <aside id="info-panel" class="glass-panel">
+    <div class="panel-header">
+      <span class="panel-icon">🚀</span>
+      <span class="panel-title">THÔNG SỐ KỸ THUẬT</span>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-label">Power Unit</div>
+        <div class="stat-value">V6 Turbo</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">ICE Power</div>
+        <div class="stat-value">400 kW</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">ERS</div>
+        <div class="stat-value">MGU-K</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">Weight</div>
+        <div class="stat-value">768 kg</div>
+      </div>
+    </div>
+    <!-- Component inspection info -->
+    <div id="component-info" class="hidden">
+      <div style="height:1px;background:var(--border-glass);margin:0 16px"></div>
+      <div style="padding:16px">
+        <h3 id="component-name" class="component-name"></h3>
+        <p id="component-desc" class="component-desc"></p>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ══════════════════ CONTROLS HINT ══════════════════ -->
+  <div id="controls-hint">
+    <div class="hint">🖱 Kéo — Xoay</div>
+    <div class="hint">⚙ Cuộn — Phóng to</div>
+    <div class="hint">↔ Chuột phải — Di chuyển</div>
+  </div>
+
+  <!-- ══════════════════ AUTO ROTATE (hidden) ══════════════════ -->
+  <button id="rotate-btn" style="display:none">⟳ TỰ ĐỘNG XOAY</button>
+
+  <!-- ══════════════════ LOADING SCREEN ══════════════════ -->
+  <div id="loading-screen">
+    <div class="loading-logo">F1</div>
+    <div class="loading-subtitle">Sci-Fi Showroom</div>
+    <div class="loading-bar-wrap">
+      <div class="loading-bar" id="loading-bar"></div>
+    </div>
+    <div class="loading-label" id="loading-label">INITIALIZING...</div>
+    <div class="loading-specs">
+      <span>NEON LIGHTING</span>
+      <span>PBR MATERIALS</span>
+      <span>SCI-FI GARAGE</span>
+      <span>X-RAY ENGINE</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════ CANVAS ══════════════════ -->
+  <div id="canvas-container"></div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+
+</html>
